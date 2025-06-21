@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Random Amino Acid Display</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: #F8F9FA;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding: 0 5vw;
+    }
+    .text-area {
+      max-width: 40vw;
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .container {
+      position: relative;
+      width: 50vw;
+      height: 90vh;
+    }
+    .molecule {
+      position: absolute;
+      transition: all 0.5s ease;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+      filter: brightness(0);
+    }
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translate(var(--from-x, 0), var(--from-y, 0)) scale(0.6) rotate(var(--rotate, 0deg));
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1) rotate(var(--rotate, 0deg));
+      }
+    }
+    }
+  </style>
+</head>
+<body>
+<div class="text-area">
+  Non-natural biology for next-generation medicines.
+</div>
+<div class="container" id="moleculeContainer"></div>
+
+<script>
+  const aminoAcids = [
+    "pAzF.svg", "pBrF.svg", "pIF.svg", "pNO2F.svg", "pCNF.svg",
+    "OPropargylY.svg", "3IY.svg", "HPG.svg", "AHA.svg",
+    "Photoleucine.svg", "Bpa.svg", "DOPA.svg", "Canavanine.svg", "Norvaline.svg",
+    "Norleucine.svg", "Cha.svg", "4F-Phe.svg", "DHPG.svg", "αα-DMG.svg",
+    "PFPhe.svg", "SMeCys.svg", "AllylCys.svg", "4Cl-Phe.svg", "HomoPhe.svg",
+    "Azetidine-2-CA.svg", "Pyrrolysine.svg", "HomoArg.svg", "2-Aminoadipate.svg", "THIQ-3-CA.svg"
+  ];
+
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  const container = document.getElementById("moleculeContainer");
+  const numberToShow = getRandomInt(12, 18);
+  const selected = aminoAcids.sort(() => 0.5 - Math.random()).slice(0, numberToShow);
+
+  const positions = [];
+
+  selected.forEach(filename => {
+    const img = document.createElement("img");
+    img.src = `svg_output/${filename}`;
+    img.className = "molecule";
+    const size = getRandomInt(50, 120);
+    img.style.width = `${size}px`;
+
+    let attempts = 0;
+    let top, left, tooClose;
+
+    do {
+      tooClose = false;
+      top = getRandomInt(5, 85);
+      left = getRandomInt(0, 95);
+      for (const pos of positions) {
+        const dx = pos.left - left;
+        const dy = pos.top - top;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 15) {
+          tooClose = true;
+          break;
+        }
+      }
+      attempts++;
+    } while (tooClose && attempts < 100);
+
+    positions.push({ top, left });
+    img.style.top = `${top}%`;
+    img.style.left = `${left}%`;
+    const angle = getRandomInt(-20, 20);
+    const fromX = getRandomInt(-200, 200) + 'px';
+    const fromY = getRandomInt(-200, 200) + 'px';
+    img.style.setProperty('--from-x', fromX);
+    img.style.setProperty('--from-y', fromY);
+    img.style.setProperty('--rotate', `${angle}deg`);
+    img.style.transform = `rotate(${angle}deg)`;
+    container.appendChild(img);
+
+    img.addEventListener('mouseenter', () => {
+      img.style.transition = 'filter 0.3s ease-in';
+      img.style.filter = 'brightness(0) drop-shadow(0 0 6px #A723FF) drop-shadow(0 0 10px #A723FF)';
+    });
+    img.addEventListener('mouseleave', () => {
+      img.style.transition = 'filter 1s ease-out';
+      img.style.filter = 'brightness(0)';
+    });
+    img.addEventListener('mouseleave', () => {
+      img.style.filter = 'brightness(0)';
+    });
+    img.addEventListener('mouseleave', () => {
+      img.style.boxShadow = 'none';
+    });
+  });
+</script>
+</body>
+</html>
