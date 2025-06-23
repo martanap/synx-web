@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Test Background Image Button</title>
+<style>
+  .custom-bg-button {
+    display: inline-block;
+    padding: 1rem 3rem;
+    border-radius: 8px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #fff !important;
+    text-decoration: none;
+    background-image: url('./img/button-bg.png'); /* your image path here */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+    cursor: pointer;
+    border: none;
+    user-select: none;
+    transition: filter 0.3s ease;
+  }
+  .custom-bg-button:hover,
+  .custom-bg-button:focus {
+    filter: brightness(1.1);
+    outline: none;
+  }
+  body {
+    background-color: #222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+</style>
+</head>
+<body>
+
+<a href="#" class="custom-bg-button">Get in contact</a>
+
+</body>
+</html>

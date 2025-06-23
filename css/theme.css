@@ -2212,6 +2212,9 @@ textarea.form-control-lg {
     border-color: var(--bs-btn-disabled-border-color);
     opacity: var(--bs-btn-disabled-opacity); }
 
+
+
+
 .btn-primary {
   --bs-btn-color: #fff;
   --bs-btn-bg: #151515;
@@ -4467,7 +4470,7 @@ textarea.form-control-lg {
   text-transform: none;
   letter-spacing: normal;
   word-break: normal;
-  white-space: normal;
+  /* white-space: normal; */
   word-spacing: normal;
   line-break: auto;
   font-size: var(--bs-tooltip-font-size);
@@ -5653,6 +5656,7 @@ textarea.form-control-lg {
 .d-none {
   display: none !important; }
 
+  
 .shadow {
   box-shadow: 0 3rem 4rem rgba(21, 21, 21, 0.25) !important; }
 
